@@ -1,14 +1,26 @@
 import { useState } from 'react';
-import { Mail, Linkedin, Copy, Check, MessageSquare } from 'lucide-react';
+import { Mail, Linkedin, Copy, Check, MessageSquare, Coffee } from 'lucide-react';
 import { Button } from './ui/Button';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const FooterCard = () => {
   const [copied, setCopied] = useState<string | null>(null);
+  const [clickCount, setClickCount] = useState(0);
+  const [showEgg, setShowEgg] = useState(false);
 
   const handleCopy = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
     setCopied(type);
     setTimeout(() => setCopied(null), 2000);
+  };
+
+  const handleEggClick = () => {
+    if (showEgg) return;
+    
+    setShowEgg(true);
+    setTimeout(() => {
+      setShowEgg(false);
+    }, 3000);
   };
 
   const contacts = [
@@ -55,7 +67,31 @@ export const FooterCard = () => {
 
         <div className="mt-20 pt-8 border-t border-border text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center gap-4">
           <p>© 2026 Portfolio. All rights reserved.</p>
-          <p>Designed & Built with ❤️</p>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={handleEggClick}>
+            <p>Designed & Built with</p>
+            <motion.div
+              animate={showEgg ? { 
+                scale: [1, 1.5, 1],
+                rotate: [0, 10, -10, 0],
+                color: '#ef4444'
+              } : {}}
+              className="relative"
+            >
+              ❤️
+              <AnimatePresence>
+                {showEgg && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 0, x: '-50%' }}
+                    animate={{ opacity: 1, y: -30 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute left-1/2 -top-2 whitespace-nowrap bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-bold"
+                  >
+                    再点我就要请你喝咖啡啦！☕️
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
         </div>
       </div>
     </footer>

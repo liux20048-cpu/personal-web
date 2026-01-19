@@ -1,9 +1,67 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Briefcase, GraduationCap, Award, Zap, Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 import { aboutCards } from '../data/portfolio';
 import { WorkContent, SkillItem } from '../types';
 import { cn } from '../lib/utils';
+
+const TiltCard = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
+  const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
+
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-7deg", "7deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+
+    const width = rect.width;
+    const height = rect.height;
+
+    const mouseXFromCenter = e.clientX - rect.left - width / 2;
+    const mouseYFromCenter = e.clientY - rect.top - height / 2;
+
+    const xPct = mouseXFromCenter / width;
+    const yPct = mouseYFromCenter / height;
+
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateY,
+        rotateX,
+        transformStyle: "preserve-3d",
+      }}
+      className={cn("relative h-full transition-all duration-200 ease-linear transform-gpu", className)}
+    >
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 rounded-2xl pointer-events-none"
+        style={{ transform: "translateZ(50px)" }}
+      />
+      <div style={{ transform: "translateZ(20px)" }} className="relative h-full">
+        {children}
+      </div>
+    </motion.div>
+  );
+};
 
 export const AboutSection = () => {
   // Categorize data
@@ -51,7 +109,7 @@ export const AboutSection = () => {
           <span>Highlights</span>
         </motion.h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 perspective-1000">
           {(advantages?.content as string[]).map((item, index) => {
              const [title, desc] = item.split(' | ');
              return (
@@ -61,13 +119,19 @@ export const AboutSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative bg-card/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 hover:bg-card/80"
+                className="h-full"
               >
-                <div className="absolute top-6 right-6 p-2 rounded-full bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Award size={20} />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-white group-hover:text-primary transition-colors">{title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">{desc}</p>
+                <TiltCard className="group relative bg-card/50 backdrop-blur-sm border border-border rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 hover:bg-card/80">
+                  <div className="flex flex-col md:flex-row items-start gap-4">
+                    <div className="flex-1 space-y-3">
+                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{title}</h3>
+                      <p className="text-muted-foreground leading-relaxed text-sm">{desc}</p>
+                    </div>
+                    <div className="p-2 rounded-full bg-primary/10 text-primary group-hover:scale-110 transition-transform shrink-0 mt-1 self-start md:self-auto">
+                      <Award size={20} />
+                    </div>
+                  </div>
+                </TiltCard>
               </motion.div>
              );
           })}
@@ -76,15 +140,15 @@ export const AboutSection = () => {
 
       {/* 2. 工作经历 - 可折叠垂直时光轴 */}
       <div className="space-y-12">
-        <motion.h2 
+        <motion.h3 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="text-3xl font-bold flex items-center gap-3"
+          className="text-2xl font-bold flex items-center gap-3"
         >
-          <span className="text-primary">02.</span> 
+          <Briefcase className="text-primary" size={24} />
           <span>Experience</span>
-        </motion.h2>
+        </motion.h3>
 
         <div className="relative border-l-2 border-border ml-3 md:ml-6 space-y-8 py-4">
           {works.map((work, index) => {
@@ -182,15 +246,15 @@ export const AboutSection = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         {/* Education */}
         <div className="lg:col-span-5 space-y-8">
-          <motion.h2 
+          <motion.h3 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-3xl font-bold flex items-center gap-3"
+            className="text-2xl font-bold flex items-center gap-3"
           >
-            <span className="text-primary">03.</span> 
+            <GraduationCap className="text-primary" size={24} />
             <span>Education</span>
-          </motion.h2>
+          </motion.h3>
 
           {education && (
              <motion.div 
