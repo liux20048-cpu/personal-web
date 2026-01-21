@@ -28,9 +28,9 @@ export const AuroraBackground = () => {
     }
   );
 
-  const brightness = useTransform(mouseActivity, [0, 1], [1, 1.3]); // 亮度从 1 到 1.3
-  const saturate = useTransform(mouseActivity, [0, 1], [1, 1.2]);   // 饱和度从 1 到 1.2
-  const filter = useMotionTemplate`blur(100px) brightness(${brightness}) saturate(${saturate})`;
+  const brightness = useTransform(mouseActivity, [0, 1], [1.1, 1.4]); // 提高基础亮度
+  const saturate = useTransform(mouseActivity, [0, 1], [1.1, 1.3]);   // 提高基础饱和度
+  const filter = useMotionTemplate`blur(80px) brightness(${brightness}) saturate(${saturate})`; // 减小模糊半径，让轮廓更清晰
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -47,15 +47,15 @@ export const AuroraBackground = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // 不同层的视差系数
-  const x1 = useTransform(smoothMouseX, [-1, 1], [-50, 50]);
-  const y1 = useTransform(smoothMouseY, [-1, 1], [-50, 50]);
+  // 不同层的视差系数 - 增加移动范围
+  const x1 = useTransform(smoothMouseX, [-1, 1], [-100, 100]);
+  const y1 = useTransform(smoothMouseY, [-1, 1], [-100, 100]);
 
-  const x2 = useTransform(smoothMouseX, [-1, 1], [30, -30]); // 反向移动，增加深度
-  const y2 = useTransform(smoothMouseY, [-1, 1], [30, -30]);
+  const x2 = useTransform(smoothMouseX, [-1, 1], [50, -50]);
+  const y2 = useTransform(smoothMouseY, [-1, 1], [50, -50]);
 
-  const x3 = useTransform(smoothMouseX, [-1, 1], [-20, 20]);
-  const y3 = useTransform(smoothMouseY, [-1, 1], [20, -20]);
+  const x3 = useTransform(smoothMouseX, [-1, 1], [-40, 40]);
+  const y3 = useTransform(smoothMouseY, [-1, 1], [40, -40]);
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-background transition-colors duration-300">
@@ -65,17 +65,17 @@ export const AuroraBackground = () => {
       {/* 动态光晕层 1 - 荧光绿 (跟随 Primary 颜色) */}
       <motion.div
         style={{ x: x1, y: y1 }}
-        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full mix-blend-multiply dark:mix-blend-screen"
+        className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full mix-blend-multiply dark:mix-blend-screen opacity-60 dark:opacity-40"
       >
         <motion.div
-          className="w-full h-full bg-primary/30 rounded-full"
+          className="w-full h-full bg-primary/60 dark:bg-primary/40 rounded-full"
           style={{ filter }}
           animate={{
             scale: [1, 1.2, 0.9, 1],
             rotate: [0, 90, 180, 0],
           }}
           transition={{
-            duration: 20,
+            duration: 30,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -85,17 +85,17 @@ export const AuroraBackground = () => {
       {/* 动态光晕层 2 - 深蓝 */}
       <motion.div
         style={{ x: x2, y: y2 }}
-        className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] rounded-full mix-blend-multiply dark:mix-blend-screen"
+        className="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] rounded-full mix-blend-multiply dark:mix-blend-screen opacity-60 dark:opacity-40"
       >
         <motion.div 
-          className="w-full h-full bg-blue-400/20 dark:bg-blue-600/10 rounded-full"
+          className="w-full h-full bg-blue-400/50 dark:bg-blue-600/30 rounded-full"
           style={{ filter }}
           animate={{
             scale: [1, 0.8, 1.1, 1],
             rotate: [0, -60, 60, 0],
           }}
           transition={{
-            duration: 25,
+            duration: 35,
             repeat: Infinity,
             ease: "linear",
             delay: 2,
@@ -106,17 +106,17 @@ export const AuroraBackground = () => {
       {/* 动态光晕层 3 - 紫色 */}
       <motion.div
         style={{ x: x3, y: y3 }}
-        className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-full mix-blend-multiply dark:mix-blend-screen"
+        className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-full mix-blend-multiply dark:mix-blend-screen opacity-60 dark:opacity-40"
       >
         <motion.div 
-          className="w-full h-full bg-purple-400/20 dark:bg-purple-600/10 rounded-full"
+          className="w-full h-full bg-purple-400/50 dark:bg-purple-600/30 rounded-full"
           style={{ filter }}
           animate={{
             scale: [1, 1.1, 0.9, 1],
             rotate: [0, 45, -45, 0],
           }}
           transition={{
-            duration: 30,
+            duration: 40,
             repeat: Infinity,
             ease: "linear",
             delay: 5,
@@ -127,17 +127,17 @@ export const AuroraBackground = () => {
       {/* 动态光晕层 4 - 青色 (新增，增强丰富度) */}
       <motion.div
         style={{ x: x2, y: y1 }} // 混合视差
-        className="absolute top-[40%] left-[40%] w-[30vw] h-[30vw] rounded-full mix-blend-multiply dark:mix-blend-screen"
+        className="absolute top-[40%] left-[40%] w-[30vw] h-[30vw] rounded-full mix-blend-multiply dark:mix-blend-screen opacity-60 dark:opacity-40"
       >
         <motion.div 
-          className="w-full h-full bg-cyan-400/20 dark:bg-cyan-500/10 rounded-full"
+          className="w-full h-full bg-cyan-400/50 dark:bg-cyan-500/30 rounded-full"
           style={{ filter }}
           animate={{
             scale: [1, 1.3, 0.8, 1],
-            opacity: [0.3, 0.6, 0.3],
+            opacity: [0.5, 0.8, 0.5],
           }}
           transition={{
-            duration: 15,
+            duration: 25,
             repeat: Infinity,
             ease: "easeInOut",
           }}
