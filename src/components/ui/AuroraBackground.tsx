@@ -10,13 +10,6 @@ export const AuroraBackground = () => {
   const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
   const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
-  // 鼠标移动速度 (用于呼吸效果)
-  const velocityX = useMotionValue(0);
-  const velocityY = useMotionValue(0);
-  // 简单的速度计算：当前值 - 上一帧值 (通过 useEffect 模拟)
-  // 或者使用 useVelocity hook (Framer Motion 提供的)
-  // 但为了简单控制呼吸感，我们可以直接基于 smoothMouse 和 mouse 的差值来估算“活跃度”
-
   // 呼吸效果：基于鼠标移动活跃度调整亮度和饱和度
   // 当鼠标快速移动时，差值变大，output 也变大
   const mouseActivity = useTransform(

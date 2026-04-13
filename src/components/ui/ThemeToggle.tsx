@@ -3,7 +3,7 @@ import { Button } from './Button';
 import { useTheme } from '../../hooks/useTheme';
 
 export function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   return (
     <Button

@@ -7,13 +7,14 @@ import { Play, ArrowUpRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const PortfolioSection = () => {
-  const [filter, setFilter] = useState<'all' | 'news' | 'event' | 'interview' | 'product'>('product');
+  type Filter = 'all' | 'news' | 'event' | 'interview' | 'product';
+  const [filter, setFilter] = useState<Filter>('product');
 
   const filteredArticles = filter === 'all' 
     ? articleCards 
     : articleCards.filter(article => article.category === filter);
 
-  const categories = [
+  const categories: { id: Filter; label: string }[] = [
     { id: 'product', label: 'Product' },
     { id: 'interview', label: 'Interview' },
     { id: 'event', label: 'Event' },
@@ -41,7 +42,7 @@ export const PortfolioSection = () => {
             {categories.map((cat) => (
               <button
                 key={cat.id}
-                onClick={() => setFilter(cat.id as any)}
+                onClick={() => setFilter(cat.id)}
                 className={cn(
                   "px-4 py-2 rounded-full text-sm transition-all duration-300 border",
                   filter === cat.id

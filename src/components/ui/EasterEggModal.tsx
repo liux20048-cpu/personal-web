@@ -54,16 +54,25 @@ export const EasterEggModal = () => {
             <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
             <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl" />
 
+            <svg width="0" height="0" className="absolute">
+              <defs>
+                <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="hsl(var(--primary))" />
+                  <stop offset="100%" stopColor="#3b82f6" />
+                </linearGradient>
+              </defs>
+            </svg>
+
             <button 
               onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-muted transition-colors group"
             >
-              <X size={20} />
+              <X size={20} style={{ stroke: "url(#icon-gradient)" }} />
             </button>
 
             <div className="mb-6 flex justify-center">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center animate-bounce">
-                <Heart className="text-primary fill-primary" size={32} />
+                <Heart style={{ fill: "url(#icon-gradient)", stroke: "url(#icon-gradient)" }} size={32} />
               </div>
             </div>
 

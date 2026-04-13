@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Briefcase, GraduationCap, Award, Zap, Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
+import { Briefcase, GraduationCap, Award, Zap, Calendar, MapPin, ChevronDown } from 'lucide-react';
 import { aboutCards } from '../data/portfolio';
 import { WorkContent, SkillItem } from '../types';
 import { cn } from '../lib/utils';

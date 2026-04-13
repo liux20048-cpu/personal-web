@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Mail, Linkedin, Copy, Check, MessageSquare, Coffee } from 'lucide-react';
+import { Mail, Copy, Check, MessageSquare } from 'lucide-react';
 import { Button } from './ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const FooterCard = () => {
   const [copied, setCopied] = useState<string | null>(null);
-  const [clickCount, setClickCount] = useState(0);
   const [showEgg, setShowEgg] = useState(false);
 
   const handleCopy = (text: string, type: string) => {

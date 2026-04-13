@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projectCards } from '../data/portfolio';
 import { Badge } from './ui/Badge';
-import { ChevronDown, ChevronUp, Layers, Award, Code2, Calendar, User, ArrowUpRight } from 'lucide-react';
+import { ChevronDown, Layers, Award, Code2, Calendar, User, ArrowUpRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Button } from './ui/Button';
 
