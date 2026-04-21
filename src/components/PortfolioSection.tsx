@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { articleCards, shortVideoCards, videoCards } from '../data/portfolio';
 import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
+import { ImageWithFallback } from './ui/ImageWithFallback';
 import { Play, ArrowUpRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -71,10 +72,20 @@ export const PortfolioSection = () => {
                 className="group relative bg-card rounded-xl overflow-hidden border border-border hover:border-foreground/20 transition-colors h-full flex flex-col"
               >
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={article.cover} 
-                    alt={article.title} 
+                  <ImageWithFallback
+                    src={article.cover}
+                    alt={article.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                    fallback={
+                      <div className="w-full h-full bg-muted flex items-center justify-center px-4">
+                        <div className="text-center text-muted-foreground text-sm leading-relaxed line-clamp-3">
+                          {article.title}
+                        </div>
+                      </div>
+                    }
                   />
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <a 
@@ -186,10 +197,20 @@ export const PortfolioSection = () => {
 
                   <div className="w-full md:w-56 shrink-0">
                     <div className="aspect-video overflow-hidden bg-muted rounded-xl border border-border">
-                      <img
+                      <ImageWithFallback
                         src={video.cover}
                         alt={video.title}
                         className="w-full h-full object-cover object-center"
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        fallback={
+                          <div className="w-full h-full bg-muted flex items-center justify-center px-4">
+                            <div className="text-center text-muted-foreground text-sm leading-relaxed line-clamp-3">
+                              {video.title}
+                            </div>
+                          </div>
+                        }
                       />
                     </div>
                   </div>
@@ -221,19 +242,21 @@ export const PortfolioSection = () => {
                 rel="noopener noreferrer"
                 className="block w-full h-full"
               >
-                {video.cover ? (
-                  <img 
-                    src={video.cover} 
-                    alt={video.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-muted flex items-center justify-center px-6">
-                    <div className="text-center text-muted-foreground text-sm leading-relaxed">
-                      {video.title}
+                <ImageWithFallback
+                  src={video.cover}
+                  alt={video.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  fallback={
+                    <div className="w-full h-full bg-muted flex items-center justify-center px-6">
+                      <div className="text-center text-muted-foreground text-sm leading-relaxed">
+                        {video.title}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  }
+                />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer border border-border">
                     <Play className="fill-foreground text-foreground ml-1" size={32} />
@@ -266,19 +289,21 @@ export const PortfolioSection = () => {
                 rel="noopener noreferrer"
                 className="block w-full h-full"
               >
-                {video.cover ? (
-                  <img 
-                    src={video.cover} 
-                    alt={video.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-muted flex items-center justify-center px-6">
-                    <div className="text-center text-muted-foreground text-sm leading-relaxed">
-                      {video.title}
+                <ImageWithFallback
+                  src={video.cover}
+                  alt={video.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  fallback={
+                    <div className="w-full h-full bg-muted flex items-center justify-center px-6">
+                      <div className="text-center text-muted-foreground text-sm leading-relaxed">
+                        {video.title}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  }
+                />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer border border-border">
                     <Play className="fill-foreground text-foreground ml-1" size={32} />
