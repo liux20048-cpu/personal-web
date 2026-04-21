@@ -10,15 +10,14 @@ export const ProjectSection = () => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   return (
-    <section id="projects" className="py-20 container mx-auto px-4">
-      <div className="mb-12 border-b border-border pb-8">
+    <section id="projects" className="py-14 container mx-auto px-4">
+      <div className="mb-10 border-b border-border pb-6">
         <h2 className="text-4xl md:text-5xl font-bold flex items-center gap-4">
-          <span className="text-primary">03.</span> 
           <span>Projects</span>
         </h2>
       </div>
 
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-8">
         {projectCards.map((project) => (
           <motion.div
             key={project.id}
@@ -37,18 +36,18 @@ export const ProjectSection = () => {
                 <div className="space-y-4 flex-1">
                   <div className="flex flex-wrap items-center gap-3">
                     <h3 className="text-2xl md:text-3xl font-bold text-foreground">{project.title}</h3>
-                    <Badge variant="outline" className="border-primary/50 text-primary">
+                    <Badge variant="outline" className="border-border text-muted-foreground">
                       {project.subtitle}
                     </Badge>
                   </div>
                   
                   <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1.5">
-                      <User size={16} className="text-primary" />
+                      <User size={16} className="text-foreground" />
                       <span>{project.role}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <Calendar size={16} className="text-primary" />
+                      <Calendar size={16} className="text-foreground" />
                       <span>{project.period}</span>
                     </div>
                   </div>
@@ -56,7 +55,7 @@ export const ProjectSection = () => {
 
                 <div className={cn(
                   "w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center transition-transform duration-300 border border-border self-start mt-1",
-                  expandedId === project.id ? "rotate-180 bg-primary text-primary-foreground border-primary" : ""
+                  expandedId === project.id ? "rotate-180 bg-foreground text-background border-foreground" : ""
                 )}>
                   <ChevronDown size={20} />
                 </div>
@@ -77,7 +76,7 @@ export const ProjectSection = () => {
                     {/* Description */}
                     <div className="bg-muted/30 p-6 rounded-xl border border-border">
                       <h4 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-                        <Layers size={18} className="text-primary" />
+                        <Layers size={18} className="text-foreground" />
                         Project Description
                       </h4>
                       <p className="text-muted-foreground leading-relaxed">
@@ -89,7 +88,7 @@ export const ProjectSection = () => {
                       {/* Responsibilities */}
                       <div className="space-y-4">
                         <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                          <Code2 size={18} className="text-primary" />
+                          <Code2 size={18} className="text-foreground" />
                           Key Responsibilities
                         </h4>
                         <ul className="space-y-3">
@@ -105,13 +104,13 @@ export const ProjectSection = () => {
                       {/* Achievements */}
                       <div className="space-y-4">
                         <h4 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                          <Award size={18} className="text-primary" />
+                          <Award size={18} className="text-foreground" />
                           Results & Impact
                         </h4>
                         <ul className="space-y-3">
                           {project.achievement.map((item, idx) => (
                             <li key={idx} className="flex items-start gap-3 text-muted-foreground leading-relaxed text-sm">
-                              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 flex-shrink-0" />
                               <span className="text-foreground/90">{item}</span>
                             </li>
                           ))}
@@ -132,17 +131,17 @@ export const ProjectSection = () => {
 
                     {/* Image Gallery */}
                     {project.images && project.images.length > 0 && (
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pt-4">
-                        {project.images.map((img, idx) => (
-                          <div key={idx} className="relative aspect-video rounded-lg overflow-hidden border border-border group">
-                            <img 
-                              src={img} 
-                              alt={`Project screenshot ${idx + 1}`} 
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      <div className="pt-4">
+                        <div className="rounded-xl border border-border bg-muted/20 overflow-hidden">
+                          <div className="w-full flex items-center justify-center px-4 py-6">
+                            <img
+                              src={project.images[0]}
+                              alt={`${project.title} 展示图`}
+                              className="w-full h-auto max-h-[520px] object-contain"
+                              loading="lazy"
                             />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                           </div>
-                        ))}
+                        </div>
                       </div>
                     )}
                   </div>

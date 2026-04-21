@@ -31,6 +31,18 @@ export interface VideoCard {
   title: string;
   cover: string;
   link: string;
+  category: 'livestream' | 'promo';
+}
+
+export interface ShortVideoCard {
+  id: string;
+  title: string;
+  topicLogic: string;
+  structure: string[];
+  role: string;
+  watchHint: string;
+  cover: string;
+  link?: string;
 }
 
 export interface ProjectCard {

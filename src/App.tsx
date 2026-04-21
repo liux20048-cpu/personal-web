@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { Download } from 'lucide-react';
 import { Button } from './components/ui/Button';
 import { HeaderNav } from './components/HeaderNav';
-import { AboutSection } from './components/AboutSection';
 import { PortfolioSection } from './components/PortfolioSection';
 import { ProjectSection } from './components/ProjectSection';
 import { FooterCard } from './components/FooterCard';
-import { AuroraBackground } from './components/ui/AuroraBackground';
 import { EasterEggModal } from './components/ui/EasterEggModal';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -31,19 +29,18 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen text-foreground selection:bg-primary/30 selection:text-primary-foreground overflow-x-hidden relative">
-      <AuroraBackground />
+    <div className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background overflow-x-hidden relative">
       <EasterEggModal />
       <HeaderNav />
       
-      <main className="pt-24 pb-20 space-y-20">
+      <main className="pt-24 pb-16 space-y-14">
         {/* Hero / Intro Area */}
-        <section className="container mx-auto px-4 py-20">
+        <section className="container mx-auto px-4 py-16">
           <div className="flex flex-col md:flex-row items-center gap-12 max-w-5xl mx-auto">
             {/* Left: Avatar */}
             <div className="relative">
               <motion.div 
-                className="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 rounded-full overflow-hidden border-4 border-border shadow-[0_0_30px_rgba(0,245,160,0.2)] cursor-pointer"
+                className="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 rounded-full overflow-hidden border border-border bg-card cursor-pointer"
                 animate={{ rotate: isAvatarSpinning ? 360 : 0 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
                 onClick={handleAvatarClick}
@@ -54,7 +51,7 @@ function App() {
                   alt="Avatar" 
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=User&background=00F5A0&color=000';
+                    (e.target as HTMLImageElement).src = 'https://ui-avatars.com/api/?name=User&background=111111&color=ffffff';
                   }}
                 />
               </motion.div>
@@ -76,12 +73,10 @@ function App() {
             {/* Right: Text Content */}
             <div className="text-center md:text-left space-y-6">
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-                你好，我是<span className="text-primary">刘芯</span>。
+                你好，我是<span className="text-foreground/75">刘芯</span>。
               </h1>
-              <h2 className="text-2xl md:text-3xl font-semibold text-foreground/90">链接技术与价值，让内容更有温度。</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                我是一名内容实践者，致力于打破技术与市场之间的壁垒。目前正在寻求品牌内容相关的职业机会，期待与你共同构建有深度的内容影响力。
-              </p>
+              <h2 className="text-2xl md:text-3xl font-semibold text-foreground/90">将复杂技术转化为清晰的用户价值表达</h2>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">内容策划｜技术转译｜品牌表达｜增长导向</p>
               
               <div className="pt-4 flex justify-center md:justify-start">
                 <a href="/resume.pdf" download="刘芯_Resume.pdf" target="_blank" rel="noopener noreferrer">
@@ -95,7 +90,6 @@ function App() {
           </div>
         </section>
 
-        <AboutSection />
         <PortfolioSection />
         <ProjectSection />
       </main>

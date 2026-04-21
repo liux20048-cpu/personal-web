@@ -28,12 +28,8 @@ export const FooterCard = () => {
   ];
 
   return (
-    <footer id="contact" className="py-20 container mx-auto px-4">
+    <footer id="contact" className="py-16 container mx-auto px-4">
       <div className="bg-card border border-border rounded-3xl p-8 md:p-12 text-center relative overflow-hidden shadow-sm">
-        {/* Decor */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent opacity-50" />
-        <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-
         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">期待与你合作</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto mb-12 text-lg">
           我目前正在寻求全职工作机会，同时也对兼职项目持开放态度。如果你对我的经历感兴趣，或有合作意向，欢迎随时联系。
@@ -43,9 +39,9 @@ export const FooterCard = () => {
           {contacts.map((contact) => (
             <div 
               key={contact.type}
-              className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 border border-border hover:border-primary/30 transition-colors group min-w-[280px]"
+              className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 border border-border hover:border-foreground/20 transition-colors group min-w-[280px]"
             >
-              <div className="p-3 rounded-full bg-background text-primary shadow-sm">
+              <div className="p-3 rounded-full bg-background text-foreground shadow-sm">
                 {contact.icon}
               </div>
               <div className="text-left flex-grow">
@@ -55,7 +51,7 @@ export const FooterCard = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="ml-2 hover:bg-primary/20 hover:text-primary"
+                className="ml-2 hover:bg-muted hover:text-foreground"
                 onClick={() => handleCopy(contact.value, contact.type)}
               >
                 {copied === contact.type ? <Check size={16} /> : <Copy size={16} />}
@@ -64,7 +60,7 @@ export const FooterCard = () => {
           ))}
         </div>
 
-        <div className="mt-20 pt-8 border-t border-border text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-12 pt-8 border-t border-border text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center gap-4">
           <p>© 2026 Portfolio. All rights reserved.</p>
           <div className="flex items-center gap-2 cursor-pointer" onClick={handleEggClick}>
             <p>Designed & Built with</p>
@@ -72,7 +68,7 @@ export const FooterCard = () => {
               animate={showEgg ? { 
                 scale: [1, 1.5, 1],
                 rotate: [0, 10, -10, 0],
-                color: '#ef4444'
+                color: 'currentColor'
               } : {}}
               className="relative"
             >
@@ -83,7 +79,7 @@ export const FooterCard = () => {
                     initial={{ opacity: 0, y: 0, x: '-50%' }}
                     animate={{ opacity: 1, y: -30 }}
                     exit={{ opacity: 0 }}
-                    className="absolute left-1/2 -top-2 whitespace-nowrap bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-bold"
+                    className="absolute left-1/2 -top-2 whitespace-nowrap bg-foreground text-background px-3 py-1 rounded-full text-xs font-bold"
                   >
                     再点我就要请你喝咖啡啦！☕️
                   </motion.div>
